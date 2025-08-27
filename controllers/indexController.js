@@ -97,10 +97,16 @@ class authApiController {
       const user = await userModel.getUserByMobile(mobile);
 
       if (!user) return res.status(404).json({ message: "User not found" });
-      if (user.otp_code !== otp)
+
+      console.log("User from DB:", user); // Debugging line
+
+      if (user.otp_code.toString() !== otp.toString()) {
         return res.status(400).json({ message: "Invalid OTP" });
-      if (new Date() > user.otp_expiry)
+      }
+
+      if (new Date() > new Date(user.otp_expiry)) {
         return res.status(400).json({ message: "OTP expired" });
+      }
 
       await userModel.verifyUser(mobile);
       res.status(200).json({ message: "OTP verified successfully" });

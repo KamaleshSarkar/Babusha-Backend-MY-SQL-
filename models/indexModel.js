@@ -37,7 +37,7 @@ class UserModel {
 
   async getUserByMobile(mobile) {
     const [rows] = await pool.query(
-      `SELECT * FROM sensegeofence_Test.test_users WHERE mobile = ?`,
+      `SELECT * FROM sensegeofence_Babusa.babusa_users WHERE mobile = ?`,
       [mobile]
     );
     return rows[0];
@@ -45,7 +45,7 @@ class UserModel {
 
   async verifyUser(mobile) {
     return pool.query(
-      `UPDATE sensegeofence_Test.test_users 
+      `UPDATE sensegeofence_Babusa.babusa_users 
        SET is_verified = 1, otp_code = NULL, otp_expiry = NULL
        WHERE mobile = ?`,
       [mobile]
